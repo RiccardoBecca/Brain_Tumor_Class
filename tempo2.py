@@ -24,7 +24,10 @@ class RSN(torch.nn.Module):
         self.gammas = torch.nn.ParameterList([torch.nn.Parameter(torch.randn(int(self.SN.num_nodes), int(self.SN.num_nodes)))])
     def forward(self, item, batchsize):
         energy_SN = self.SN(item)
-        energy_SN += torch.sum(torch.sum(torch.triu(torch.pow(torch.sqrt(torch.sum(torch.pow(item["pos"].view(batchsize,int(self.SN.num_nodes),3).unsqueeze(2)-item["pos"].view(batchsize,int(self.SN.num_nodes),3).unsqueeze(1), 2), dim=-1)), -6), diagonal=1) *torch.exp(self.gammas[0]), dim=-1), dim=-1).view(batchsize,1)
+        energy_SN += torch.sum(torch.sum(torch.triu(torch.pow(torch.sqrt(torch.sum(torch.pow(
+        item["pos"].view(batchsize,int(self.SN.num_nodes),3).unsqueeze(2)-
+        item["pos"].view(batchsize,int(self.SN.num_nodes),3).unsqueeze(1), 2), dim=-1)
+        ), -6), diagonal=1) *torch.exp(self.gammas[0]), dim=-1), dim=-1).view(batchsize,1)
         return energy_SN
 
 

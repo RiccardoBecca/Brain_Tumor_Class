@@ -24,7 +24,10 @@ class RSN(torch.nn.Module):
         self.bias = torch.nn.ParameterList([torch.tensor([48.])])
     def forward(self, item, batchsize):
         energy_SN = self.SN(item)
-        energy_SN += torch.sum(torch.sum(torch.triu(torch.pow(torch.sqrt(torch.sum(torch.pow(item["pos"].view(batchsize,int(self.SN.num_nodes),3).unsqueeze(2)-item["pos"].view(batchsize,int(self.SN.num_nodes),3).unsqueeze(1), 2), dim=-1)), -6), diagonal=1) *self.bias[0], dim=-1), dim=-1).view(batchsize,1)
+        energy_SN += torch.sum(torch.sum(torch.triu(torch.pow(torch.sqrt(torch.sum(torch.pow(
+        item["pos"].view(batchsize,int(self.SN.num_nodes),3).unsqueeze(2)-
+        item["pos"].view(batchsize,int(self.SN.num_nodes),3).unsqueeze(1), 2), dim=-1)), -6
+        ), diagonal=1) *self.bias[0], dim=-1), dim=-1).view(batchsize,1)
         return energy_SN
 
 
