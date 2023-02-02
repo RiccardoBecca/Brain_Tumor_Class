@@ -21,7 +21,8 @@ class RSN(torch.nn.Module):
     def __init__(self, SN):
         super(RSN, self).__init__()
         self.SN = SN
-        self.gammas = torch.nn.ParameterList([torch.nn.Parameter(torch.randn(int(self.SN.num_nodes), int(self.SN.num_nodes)))])
+        self.gammas = torch.nn.ParameterList([torch.nn.Parameter(
+        torch.randn(int(self.SN.num_nodes), int(self.SN.num_nodes)))])
     def forward(self, item, batchsize):
         energy_SN = self.SN(item)
         energy_SN += torch.sum(torch.sum(torch.triu(torch.pow(torch.sqrt(torch.sum(torch.pow(
